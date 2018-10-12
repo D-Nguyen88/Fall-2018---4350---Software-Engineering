@@ -3,3 +3,6 @@ https://docs.oracle.com/javase/8/docs/technotes/guides/rmi/hello/hello-world.htm
 https://www.tutorialspoint.com/java_rmi
 
 https://www.studytonight.com/java/rmi-in-java.php
+
+Remote methods should always throw RemoteException:
+https://stackoverflow.com/questions/4650161/illegal-remote-method-in-java
