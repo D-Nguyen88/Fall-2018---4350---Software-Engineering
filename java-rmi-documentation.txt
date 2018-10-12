@@ -1,0 +1,5 @@
+https://docs.oracle.com/javase/8/docs/technotes/guides/rmi/hello/hello-world.html
+
+https://www.tutorialspoint.com/java_rmi
+
+https://www.studytonight.com/java/rmi-in-java.php
