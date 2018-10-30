@@ -62,16 +62,6 @@ public class Adder extends UnicastRemoteObject implements AddServerInterface {
                         .append("\n");
             }
 
-            // to return selected data fields only
-//            while(rs.next()) {
-//                for(FrontendQuery dataField : frontendQueryFields) {
-//                    queryResults
-//                            .append(rs.getString(dataField.getQueryFieldName()))
-//                            .append("\t\t\t");
-//                }
-//                queryResults.append("\n");
-//            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
