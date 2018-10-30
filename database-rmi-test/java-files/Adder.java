@@ -7,14 +7,6 @@ public class Adder extends UnicastRemoteObject implements AddServerInterface {
         super();
     }
 
-    public String hello(String userName) {
-        return "Hello "+ userName +"!";
-    }
-
-    public int squareNums(int rootNum) {
-        return rootNum*rootNum;
-    }
-
     public String sendQuery(FrontendQuery[] frontendQueryFields) {
         StringBuilder queryResults = new StringBuilder();
         StringBuilder queryAsString = new StringBuilder("select ");
