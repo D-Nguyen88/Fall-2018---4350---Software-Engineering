@@ -51,7 +51,7 @@ public class SignUpController extends RMIClientInitializer implements Initializa
 		try {
 		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getIp() +"/binded"); //connecting to RMI Server
 		System.out.println("Successfully Connected to Admin module's RMI Server");	//if connection successful 
-		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),emailSUField.getText(), "rmitest5", passwordSUField.getText())) {
+		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),emailSUField.getText(), "rmitest1", passwordSUField.getText())) {
 			System.out.println("User Registered Succesfully");
 			//load sign in page 
 		}

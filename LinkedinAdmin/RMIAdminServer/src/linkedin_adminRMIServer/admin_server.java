@@ -27,7 +27,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			Connection con = null;
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/localdb","root","adminuser" ); //value changes if DB changed
+				con = DriverManager.getConnection("jdbc:mysql://linkedindb.czzwcn7vqihl.us-east-1.rds.amazonaws.com:3306/LinkedInDB","csc4350root","LinkedIn2daDB!" ); //value changes if DB changed
 				System.out.println("Database connected");
 			} catch (Exception ex) {
 				System.out.println("Error connection to Database" + ex);
@@ -42,8 +42,8 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			PreparedStatement ps;
 			ResultSet rs;
 			boolean registered=false;  // checking if username exists in DB
-			String Insertquery = "INSERT INTO `Users`(`firstName`, `lastName`, `email`, `userName`, `password`) VALUES (?,?,?,?,?)"; //query to insert method parameters
-			String Userquery = "SELECT * FROM `Users` WHERE `userName` =?";  // query to check if username exists 
+			String Insertquery = "INSERT INTO `UserInfo`(`firstName`, `lastName`, `email`, `username`, `password`) VALUES (?,?,?,?,?)"; //query to insert method parameters
+			String Userquery = "SELECT * FROM `UserInfo` WHERE `username` =?";  // query to check if username exists 
 
 			try {
 
@@ -79,7 +79,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			PreparedStatement ps;
 			ResultSet rs;
 			boolean loggedin= false;
-			String query = "SELECT * FROM `Users` WHERE `userName` =? AND `password` =?";
+			String query = "SELECT * FROM `UserInfo` WHERE `username` =? AND `password` =?";
 			try {
 				ps = getDBConnection().prepareStatement(query);
 				pass = passwordHash(pass); //converts user enter password to hash to compare whats in DB 
