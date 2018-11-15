@@ -5,9 +5,8 @@ import java.util.Scanner;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import linkedin_adminRMIServer.RMIClientInitializer;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import client_initializer.RMIClientInitializer;
 import javafx.scene.layout.AnchorPane;
 
 @SuppressWarnings("unused")
@@ -41,10 +40,12 @@ private Stage primaryStage;
 	}
 	
 	public static void main(String[] args) {
-		Scanner s1 = new Scanner (System.in);
+		Scanner input = new Scanner (System.in);
 		System.out.print("Enter the Admin APP's RMI Server IP address: ");
-		RMIClientInitializer.setIp(s1.nextLine());
-		s1.close();
+		RMIClientInitializer.setAdminIp(input.nextLine());
+		System.out.print("Enter the backend's RMI Server IP address: ");
+		RMIClientInitializer.setBackendIp(input.nextLine());
+		input.close();
 		launch(args);
 	}
 }

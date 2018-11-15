@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import linkedin_adminRMIServer.RMIClientInitializer;
+import client_initializer.RMIClientInitializer;
 import linkedin_adminRMIServer.adminServerinterface;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -49,9 +49,9 @@ public class SignUpController extends RMIClientInitializer implements Initializa
 		
 		RMILoader();
 		try {
-		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getIp() +"/binded"); //connecting to RMI Server
-		System.out.println("Successfully Connected to Admin module's RMI Server");	//if connection successful 
-		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),emailSUField.getText(), "rmitest1", passwordSUField.getText())) {
+			adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getAdminIp() +"/binded"); //connecting to RMI Server
+			System.out.println("Successfully Connected to Admin module's RMI Server");	//if connection successful
+		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),emailSUField.getText(), "rtoledo1", passwordSUField.getText())) {
 			System.out.println("User Registered Succesfully");
 			//load sign in page 
 		}

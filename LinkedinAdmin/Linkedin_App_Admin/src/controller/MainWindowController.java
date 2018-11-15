@@ -19,7 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import linkedin_adminRMIServer.RMIClientInitializer;
+import client_initializer.RMIClientInitializer;
 import linkedin_adminRMIServer.adminServerinterface;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -56,7 +56,7 @@ public class MainWindowController extends RMIClientInitializer implements Initia
 		
 		RMILoader();
 		try {
-		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getIp() +"/binded");  //calling loginuser method from admin server 
+		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getAdminIp() +"/binded");  //calling loginuser method from admin server
 		System.out.println("Successfully Connected to Admin module's RMI Server");
 		if (client.loginuser(userNameField.getText(),passwordField.getText())) {
 			System.out.println("User Login Succesfully");

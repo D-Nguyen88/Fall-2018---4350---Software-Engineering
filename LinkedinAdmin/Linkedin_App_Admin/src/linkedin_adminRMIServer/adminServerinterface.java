@@ -10,5 +10,3 @@ public interface adminServerinterface {
 	boolean loginuser(String uname, String pass) throws RemoteException;
 	String passwordHash(String pass) throws RemoteException, NoSuchAlgorithmException;
 }
-
-
