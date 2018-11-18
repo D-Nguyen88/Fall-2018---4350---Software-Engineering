@@ -1,5 +1,8 @@
 package linkedin_adminRMIServer;
 
+
+import java.io.File;
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.security.MessageDigest;
@@ -9,17 +12,37 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 
 
 @SuppressWarnings("serial")
 public class admin_server extends UnicastRemoteObject implements adminServerinterface {
-	
+	 Logger logger = LoggerFactory.getLogger("logger");
+	 
 
 	public admin_server() throws RemoteException{
 		
 	}
 	
-	
+	String key = "";
 	
 	//connects to database 
 		public Connection getDBConnection(){  
@@ -27,10 +50,10 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			Connection con = null;
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				con = DriverManager.getConnection("jdbc:mysql://localhost:3306/localdb","root","adminuser" ); //value changes if DB changed
-				System.out.println("Database connected");
+				con = DriverManager.getConnection("jdbc:mysql://linkedin.cctcghvmt1au.us-east-2.rds.amazonaws.com/LinkedInDB","csc4350root","LinkedIn2daDB!" ); //value changes if DB changed
+				logger.info("Database Connected");
 			} catch (Exception ex) {
-				System.out.println("Error connection to Database" + ex);
+				logger.error("Database Connection Failed", ex);
 			}
 
 			return con;
@@ -42,8 +65,8 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			PreparedStatement ps;
 			ResultSet rs;
 			boolean registered=false;  // checking if username exists in DB
-			String Insertquery = "INSERT INTO `Users`(`firstName`, `lastName`, `email`, `userName`, `password`) VALUES (?,?,?,?,?)"; //query to insert method parameters
-			String Userquery = "SELECT * FROM `Users` WHERE `userName` =?";  // query to check if username exists 
+			String Insertquery = "INSERT INTO `UserInfo`(`firstName`, `lastName`, `email`, `username`, `password`) VALUES (?,?,?,?,?)"; //query to insert method parameters
+			String Userquery = "SELECT * FROM `UserInfo` WHERE `username` =?";  // query to check if username exists 
 
 			try {
 
@@ -79,7 +102,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			PreparedStatement ps;
 			ResultSet rs;
 			boolean loggedin= false;
-			String query = "SELECT * FROM `Users` WHERE `userName` =? AND `password` =?";
+			String query = "SELECT * FROM `UserInfo` WHERE `username` =? AND `password` =?";
 			try {
 				ps = getDBConnection().prepareStatement(query);
 				pass = passwordHash(pass); //converts user enter password to hash to compare whats in DB 
@@ -88,6 +111,9 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 				rs = ps.executeQuery();
 				if(rs.next())
 				{
+					int id= rs.getInt("userId");
+					String ids = Integer.toString(id);
+					setKey(ids);
 					loggedin= true;
 					return loggedin;
 				}
@@ -96,6 +122,14 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			}
 			return loggedin;
 		}
+
+		public void setKey(String key) {
+			this.key= key;
+		}
+		public String getKey() {
+			return key;
+		}
+		
 
 		
 		//hashes password for encryption 
@@ -110,5 +144,21 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			}
 			return hashed.toString();
 		}
+		
+		//converts xml to csv 
+		
+		public void XML2CSV(String xml, String xsl, String CSV) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+		  File stylesheet = new File(xsl); //transformation sheet
+	    File xmlSource = new File(xml); //input file
 
+	    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    DocumentBuilder builder = factory.newDocumentBuilder();
+	    Document document = builder.parse(xmlSource);
+	    StreamSource stylesource = new StreamSource(stylesheet);
+	    Transformer transformer = TransformerFactory.newInstance()
+	            .newTransformer(stylesource);
+	    Source source = new DOMSource(document);
+	    Result outputTarget = new StreamResult(new File(CSV)); //output file
+	    transformer.transform(source, outputTarget);
+}
 }
