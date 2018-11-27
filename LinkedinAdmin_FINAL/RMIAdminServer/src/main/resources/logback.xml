@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration>
-  <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+<configuration debug="true">
+  <appender name="logger" class="ch.qos.logback.core.FileAppender">
  <file>server_logfile.log</file>
         <append>true</append>
     <encoder>
@@ -10,6 +10,6 @@
   </appender>
 
   <root level="debug">
-    <appender-ref ref="FILE" />
+    <appender-ref ref="logger" />
   </root>
 </configuration>

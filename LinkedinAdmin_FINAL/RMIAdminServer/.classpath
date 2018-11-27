@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry excluding="res/|main/resources/" kind="src" path="src"/>
+	<classpathentry excluding="res/|main/resources/|main/|main/resources/|main/|main/resources/|main/resources/" kind="src" path="src"/>
 	<classpathentry kind="src" path="src/res"/>
+	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry kind="lib" path="src/mysql-connector-java-8.0.12.jar"/>
 	<classpathentry kind="lib" path="src/res/logback-classic-1.3.0-alpha4.jar"/>
 	<classpathentry kind="lib" path="src/res/slf4j-api-1.7.25.jar"/>

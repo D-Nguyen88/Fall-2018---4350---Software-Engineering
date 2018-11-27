@@ -1,23 +1,23 @@
 package linkedin_adminRMIServer;
 
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.util.Scanner;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class adminServerstart {
+	
+	static {System.setProperty("logback.configurationFile", "res/logback.xml");}
+	 
 
 	public static void main(String[] args) {
 		String serverIp;  //changes according to your server ip
-		System.setProperty("logback.configurationFile", "src/logback.xml");
-		 
-		final Logger logger = LoggerFactory.getLogger(adminServerstart.class);
+		 Logger logger = (Logger) LoggerFactory.getLogger(adminServerstart.class);
 
-		
 		@SuppressWarnings("unused")
 		String os;
 		Scanner s1 = new Scanner(System.in);
