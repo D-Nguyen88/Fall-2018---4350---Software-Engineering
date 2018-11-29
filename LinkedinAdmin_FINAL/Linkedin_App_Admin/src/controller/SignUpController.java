@@ -1,4 +1,6 @@
 package controller;
+
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -6,54 +8,62 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-
-
-import javafx.event.ActionEvent;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import linkedin_adminRMIServer.RMIClientInitializer;
-import linkedin_adminRMIServer.adminServerinterface;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-public class SignUpController extends RMIClientInitializer implements Initializable  {
+import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
+import linkedin_adminRMIServer.adminServerinterface;
 
+public class SignUpController extends client_initializer.RMIClientInitializer implements Initializable{
+	
 	//Views
 	@FXML private Text errorText;
 	@FXML private TextField firstNameSUField;
 	@FXML private TextField lastNameSUField;
-	@FXML private TextField emailSUField;
+	@FXML private TextField userNameField;
 	@FXML private TextField passwordSUField;
 	@FXML private Button signUpButton;
+	public int userSessionId = 0;
+	
 	@SuppressWarnings("unused")
-
 	private Main main;
 	@SuppressWarnings("unused")
 	private Stage primaryStage;
 
+	
 	public void setMain(Main main) {
 		this.main = main;
 	}
-
-
-
-
+	
+	
+	
 	public void signUp() throws MalformedURLException, RemoteException, NotBoundException { //rmi method
-				/////////////////////////********* RMI CODE START *********////////////////////////
+		/////////////////////////********* RMI CODE START *********////////////////////////
+		
+	
+		System.out.println("FirstName: " + firstNameSUField.getText());
+		System.out.println("LastName: " + lastNameSUField.getText());
+		System.out.println("Email: " + userNameField.getText());
+		System.out.println("Password: " + passwordSUField.getText());
 		
 		RMILoader();
 		try {
-		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getIp() +"/binded"); //connecting to RMI Server
+		adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ getAdminIp() +"/binded"); //connecting to RMI Server
 		System.out.println("Successfully Connected to Admin module's RMI Server");	//if connection successful 
-		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),emailSUField.getText(), "rmitest2", passwordSUField.getText())) {
+		if (client.registerUser(firstNameSUField.getText(), lastNameSUField.getText(),userNameField.getText(), "rmitest5", passwordSUField.getText())) {
 			System.out.println("User Registered Succesfully");
 			//load sign in page 
+			
+			TimeUnit.SECONDS.sleep(2);
+			searchScreenLoader();
 		}
 		else {
 			showAlert2();  //username not available 
@@ -63,16 +73,9 @@ public class SignUpController extends RMIClientInitializer implements Initializa
 		 System.out.println(e);
 			
 		}
-		/*	System.out.println("FirstName: " + firstNameSUField.getText());
-			System.out.println("LastName: " + lastNameSUField.getText());
-			System.out.println("Email: " + emailSUField.getText());
-			System.out.println("Password: " + passwordSUField.getText());
-		 */
-		
-		
-			/////////////////////////********* RMI CODE END *********////////////////////////
+			////////////////////////********* RMI CODE END *********////////////////////////
 	}
-
+	
 	public void showAlert2() {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("Error");
@@ -80,27 +83,28 @@ public class SignUpController extends RMIClientInitializer implements Initializa
 		alert.setContentText("Please use a different username for signup");
 		alert.showAndWait();		
 	}
-
+	
 
 	/*public void searchViewSwitch() {
-			Stage stage = (Stage) signUpButton.getScene().getWindow();
-		    stage.close();
-		}*/
+		Stage stage = (Stage) signUpButton.getScene().getWindow();
+	    stage.close();
+	}*/
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		//degreeTypeCombo.setItems(degree);
-
+		
 	}
-
-
-
-
+	
+	
+	
+	
 	//This method is only an event listener for testing and will be changed to a remove the action event.
 	//Method will be called upon complete sign-in
-	public void handleButtonAction(ActionEvent event) {
+	//public void handleButtonAction(ActionEvent event) 
+	public void searchScreenLoader() {
 		Stage stage2 = (Stage) signUpButton.getScene().getWindow();
-		stage2.close();
+	    stage2.close();
 		try {
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/SearchView.fxml"));
 			Parent root1 = (Parent) fxmlLoader.load();
@@ -111,7 +115,6 @@ public class SignUpController extends RMIClientInitializer implements Initializa
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 	}
-
 }

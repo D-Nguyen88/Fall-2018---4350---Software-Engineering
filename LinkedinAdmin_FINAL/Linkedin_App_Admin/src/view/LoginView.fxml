@@ -27,7 +27,7 @@
          </styleClass>
       </Button>
       <TextField fx:id="userNameField" layoutX="106.0" layoutY="174.0" prefHeight="27.0" prefWidth="261.0" promptText="Username" />
-      <PasswordField fx:id="passwordField" layoutX="106.0" layoutY="227.0" prefHeight="27.0" prefWidth="261.0" promptText="Password" />
+      <TextField fx:id="passwordField" layoutX="106.0" layoutY="227.0" prefHeight="27.0" prefWidth="261.0" promptText="Password" />
       <Text fill="#f5f3f3" layoutX="227.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Not a Member?">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -41,7 +41,7 @@
       </Button>
       <ImageView fitHeight="99.0" fitWidth="150.0" layoutX="6.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@download2.jpeg" />
+            <Image url="@images/download2.jpeg" />
          </image>
       </ImageView>
       <Label layoutX="182.0" layoutY="56.0" text="LinkedIn Crawler" textFill="#fffefe">

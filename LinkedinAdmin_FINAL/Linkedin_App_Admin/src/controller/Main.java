@@ -1,18 +1,19 @@
 package controller;
+	
 import java.io.IOException;
 import java.util.Scanner;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
-import linkedin_adminRMIServer.RMIClientInitializer;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+//import linkedin_adminRMIServer.RMIClientInitializer;
 
-@SuppressWarnings("unused")
+
 public class Main extends Application {
-private Stage primaryStage;
+	
+	private Stage primaryStage;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -41,12 +42,12 @@ private Stage primaryStage;
 	}
 	
 	public static void main(String[] args) {
-		Scanner s1 = new Scanner (System.in);
+		Scanner input = new Scanner (System.in);
 		System.out.print("Enter the Admin APP's RMI Server IP address: ");
-		RMIClientInitializer.setIp(s1.nextLine());
-		s1.close();
+		client_initializer.RMIClientInitializer.setAdminIp(input.nextLine());
+		System.out.print("Enter the backend's RMI Server IP address: ");
+		client_initializer.RMIClientInitializer.setBackendIp(input.nextLine());
+		input.close();
 		launch(args);
 	}
 }
-
-
