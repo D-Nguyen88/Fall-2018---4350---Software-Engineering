@@ -1,12 +1,13 @@
-import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import java.io.File;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -20,15 +21,14 @@ public class XMLGenerator implements Serializable {
     }
 
     public String resultSetToXML(ResultSet resultSet, String fileName) {
-        String filePath = "xml-files\\"+fileName;
+        String filePath = "xml-files\\\\"+fileName;
         File xmlFile = new File(filePath);
 
         try {
             ResultSetMetaData rsmd = resultSet.getMetaData();
             ArrayList<String> columnNames = new ArrayList<>();
-            for(int i=0; i<rsmd.getColumnCount(); i++) {
+            for(int i=1; i<=rsmd.getColumnCount(); i++) {
                 columnNames.add(rsmd.getColumnName(i));
-                System.out.println(rsmd.getColumnName(i));
             }
             String userIdCol=columnNames.get(columnNames.indexOf("userId"));
             columnNames.remove("userId");

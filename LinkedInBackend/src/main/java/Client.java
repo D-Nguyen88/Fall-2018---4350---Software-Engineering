@@ -5,7 +5,7 @@ public class Client {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         try {
-            BackendServerInterface st = (BackendServerInterface) Naming.lookup("rmi://"+ args[0] +"/AddService");
+            BackendServerInterface st = (BackendServerInterface) Naming.lookup("rmi://127.0.0.1/BackendService");
 
             FrontendQuery frontendQuery = new FrontendQuery();
             System.out.println("First name:");
