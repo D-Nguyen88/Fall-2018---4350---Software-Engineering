@@ -148,7 +148,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 		
 		
 		// polling (Takes the queryID, xsl file path , and directory of CSV file (where it should go)
-		public boolean pollComplete(String queryId, String xsl, String CSV) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+		public boolean pollComplete(String queryId, String CSV) throws TransformerException, ParserConfigurationException, SAXException, IOException {
 			logger.info("Polling method invoked");
 			int resultStatus=0;
 			boolean pollingComplete= false;
@@ -188,7 +188,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			
 			logger.info("Converting xml to CSV");
 			try {
-			File stylesheet = new File(xsl); //transformation sheet
+			File stylesheet = new File("src/res/xml2csv.xsl"); //transformation sheet
 		    File xmlSource = new File(returnXMLFilepath()); //input file
 		    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder builder = factory.newDocumentBuilder();
@@ -215,6 +215,5 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 		public  String returnXMLFilepath() {
 			return XMLfilePath;
 		}
-		
 		
 }
