@@ -20,6 +20,6 @@ public interface adminServerinterface extends Remote{
 	String passwordHash(String pass) throws RemoteException, NoSuchAlgorithmException;
 	void setKey(String key) throws RemoteException;
 	String getKey() throws RemoteException;
-	boolean pollComplete(String queryId, String styleSheet) throws RemoteException, TransformerException, ParserConfigurationException, SAXException, IOException;
+	boolean pollComplete(String queryId) throws RemoteException, TransformerException, ParserConfigurationException, SAXException, IOException;
 	
 }

@@ -1,7 +1,6 @@
 package linkedin_adminRMIServer;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -12,20 +11,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 
@@ -148,7 +137,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 		
 		
 		// polling (Takes the queryID, xsl file path , and directory of CSV file (where it should go)
-		public boolean pollComplete(String queryId, String styleSheet) throws TransformerException, ParserConfigurationException, SAXException, IOException {
+		public boolean pollComplete(String queryId) throws TransformerException, ParserConfigurationException, SAXException, IOException {
 			logger.info("Polling method invoked");
 			int resultStatus=0;
 			boolean pollingComplete= false;
@@ -186,10 +175,12 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			}
 			//  xml conversion method 
 			
+			/*
 			logger.info("Converting xml to CSV");
 			try {
 			File stylesheet = new File(styleSheet); //transformation sheet
-		    File xmlSource = new File(returnXMLFilepath()); //input file
+		    //File xmlSource = new File(returnXMLFilepath()); //input file
+			File xmlSource = new File(xmlPath);
 		    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		    DocumentBuilder builder = factory.newDocumentBuilder();
 		    Document document = builder.parse(xmlSource);
@@ -202,6 +193,7 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 			}catch (Exception e) {
 				logger.info("XML to CSV failed" , e);
 			}
+			*/
 			logger.info("Polling Complete");
 			pollingComplete = true;
 			return pollingComplete;
@@ -215,5 +207,6 @@ public class admin_server extends UnicastRemoteObject implements adminServerinte
 		public  String returnXMLFilepath() {
 			return XMLfilePath;
 		}
+
 		
 }
