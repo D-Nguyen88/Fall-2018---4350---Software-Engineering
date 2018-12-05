@@ -1,4 +1,5 @@
 package controller;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -6,6 +7,21 @@ import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ResourceBundle;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import client_initializer.RMIClientInitializer;
 import javafx.collections.FXCollections;
@@ -21,6 +37,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import linkedin_adminRMIServer.adminServerinterface;
 import linkedin_backendRMIServer.BackendServerInterface;
 import linkedin_backendRMIServer.FrontendQuery;
 @SuppressWarnings("unused")
@@ -128,7 +145,7 @@ public class SearchWindowController implements Initializable {
 		}*/
 		
 		
-		public void getQuery() {
+		public void getQuery() throws MalformedURLException, RemoteException {
 			System.out.println("First Name: " + firstNameField.getText());
 			System.out.println("Last Name: " + lastNameField.getText());
 			System.out.println("State: " + stateField.getText());
@@ -149,7 +166,30 @@ public class SearchWindowController implements Initializable {
 				System.out.println("RMI Sucks!!");
 				String result = bsi.sendQuery(frontendQuery, queryId);
 				System.out.println(result);
-			} catch (MalformedURLException | RemoteException | NotBoundException e) {
+				
+				adminServerinterface client = (adminServerinterface) Naming.lookup("rmi://"+ RMIClientInitializer.getAdminIp() +"/binded");  //calling loginuser method from admin server 
+				while (!client.pollComplete(bsi.getQueryId())) {
+					System.out.println("Polling");
+				}
+				try {
+					File stylesheet = new File("src/res/xml2csv.xsl"); //transformation sheet
+				    File xmlSource = new File("/Users/Rambo/Downloads/Fall-2018---4350---Software-Engineering-master 4/LinkedInBackend/xml-files\\\\FL.xml"); //input file
+				    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+				    DocumentBuilder builder = factory.newDocumentBuilder();
+				    Document document = builder.parse(xmlSource);
+				    StreamSource stylesource = new StreamSource(stylesheet);
+				    Transformer transformer = TransformerFactory.newInstance()
+				            .newTransformer(stylesource);
+				    Source source = new DOMSource(document);
+				    Result outputTarget = new StreamResult(new File(queryId+".csv")); //output file
+				    transformer.transform(source, outputTarget);
+					}catch (Exception e) {
+						System.out.println("XML to CSV failed" + e);
+					}
+				
+				
+				
+			} catch (NotBoundException | TransformerException | ParserConfigurationException | SAXException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

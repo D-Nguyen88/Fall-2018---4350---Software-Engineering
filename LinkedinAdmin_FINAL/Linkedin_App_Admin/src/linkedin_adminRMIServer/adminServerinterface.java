@@ -11,13 +11,14 @@ import javax.xml.transform.TransformerException;
 import org.xml.sax.SAXException;
 
 public interface adminServerinterface {
-	Connection getDBConnection() throws RemoteException;
-	boolean registerUser(String fname, String lname,String email, String uname, String pass) throws RemoteException;
+	Connection getDBConnection() throws RemoteException; // db connection
+	boolean registerUser(String fname, String lname,String email, String uname, String pass) throws RemoteException;  
 	boolean loginuser(String uname, String pass) throws RemoteException;
 	String passwordHash(String pass) throws RemoteException, NoSuchAlgorithmException;
-	void XML2CSV(String xml, String xsl, String CSV) throws TransformerException, ParserConfigurationException, SAXException, IOException; //xml2csv
-	void setKey(String key)throws RemoteException;
+	void setKey(String key) throws RemoteException;
 	String getKey() throws RemoteException;
+	boolean pollComplete(String queryId) throws RemoteException, TransformerException, ParserConfigurationException, SAXException, IOException;
+	
 }
 
 
