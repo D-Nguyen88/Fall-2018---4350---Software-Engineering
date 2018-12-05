@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
+import controller.GifLoader;
 //import linkedin_adminRMIServer.RMIClientInitializer;
 
 
@@ -40,8 +41,9 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
+		
 		Scanner input = new Scanner (System.in);
 		System.out.print("Enter the Admin APP's RMI Server IP address: ");
 		client_initializer.RMIClientInitializer.setAdminIp(input.nextLine());

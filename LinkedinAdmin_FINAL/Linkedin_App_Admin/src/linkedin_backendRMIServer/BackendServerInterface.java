@@ -5,6 +5,8 @@ import java.rmi.RemoteException;
 import java.sql.Connection;
 
 public interface BackendServerInterface extends Remote {
-    String sendQuery(FrontendQuery frontendQuery) throws RemoteException;
-    Connection getConnection(String url, String user, String password) throws RemoteException;
+    String sendQuery(FrontendQuery frontendQuery, String queryId) throws RemoteException;
+    void setQueryId() throws RemoteException;
+    String getQueryId() throws RemoteException;
+    Connection getConnection() throws RemoteException;
 }

@@ -3,7 +3,6 @@ package linkedin_backendRMIServer;
 import java.io.Serializable;
 
 public class FrontendQuery implements Serializable {
-
     private String firstName, lastName, industry, position, state;
 
     public FrontendQuery() {
@@ -57,4 +56,5 @@ public class FrontendQuery implements Serializable {
     public void setState(String state) {
         this.state = state;
     }
+
 }
